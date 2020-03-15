@@ -1,16 +1,19 @@
 <template>
   <div id="app">
     <canvas-clicker :width="canvasWidth" :height="canvasHeight" :image="canvasImage"></canvas-clicker>
+    <upload-image></upload-image>
   </div>
 </template>
 
 <script>
 import CanvasClicker from './components/CanvasClicker.vue'
+import UploadImage from './components/UploadImage'
 
 export default {
   name: 'App',
   components: {
-    CanvasClicker
+    CanvasClicker,
+    UploadImage
   },
   data: () => ({
     canvasWidth: 1200,

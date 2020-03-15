@@ -8,6 +8,7 @@
 </template>
 
 <script>
+import * as apiHandler from "../lib/BackendHandler";
 export default {
   name: "CanvasClicker",
   props: {
@@ -34,7 +35,7 @@ export default {
       const rect = this.canvas.getBoundingClientRect();
       const x = event.clientX - rect.left;
       const y = event.clientY - rect.top;
-      this.currentSpace.points.push([x, y]);
+      this.currentSpace.points.push({ x: x, y: y });
       this.drawPaths();
     },
     renderPlan() {
@@ -62,14 +63,14 @@ export default {
       points.map(point => {
         context.beginPath();
         context.fillStyle = "red";
-        context.ellipse(point[0], point[1], 5, 5, Math.PI / 4, 0, 2 * Math.PI);
+        context.ellipse(point.x, point.y, 5, 5, Math.PI / 4, 0, 2 * Math.PI);
         context.fill();
         context.closePath();
       });
 
       context.beginPath();
       for (let i = 0; i < points.length; i++) {
-        context.lineTo(points[i][0], points[i][1]);
+        context.lineTo(points[i].x, points[i].y);
       }
       context.stroke();
       context.closePath();
@@ -86,14 +87,28 @@ export default {
       let totalX = 0;
       let totalY = 0;
       for (const point of points) {
-        totalX += point[0];
-        totalY += point[1];
+        totalX += point.x;
+        totalY += point.y;
       }
       return [totalX / points.length, totalY / points.length];
     },
     saveData() {
-      const data = JSON.stringify(this.spaces);
-      console.log(data);
+      this.spaces.map(async space => {
+        const spacePoints = JSON.stringify(space.points);
+        const spaceString = apiHandler.getMakeSpaceString(
+          space.name,
+          "Amazon",
+          1,
+          1,
+          1,
+          1,
+          spacePoints
+        );
+        console.log(spaceString);
+        apiHandler.callAPI(spaceString).then(res => {
+          console.log(res);
+        });
+      });
     }
   }
 };
