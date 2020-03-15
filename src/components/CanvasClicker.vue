@@ -94,7 +94,9 @@ export default {
     },
     saveData() {
       this.spaces.map(async space => {
-        const spacePoints = JSON.stringify(space.points);
+        const spacePoints = space.points.map(point => {
+          return `{x: ${point.x}, y: ${point.y}}`
+        })
         const spaceString = apiHandler.getMakeSpaceString(
           space.name,
           "Amazon",
@@ -104,7 +106,6 @@ export default {
           1,
           spacePoints
         );
-        console.log(spaceString);
         apiHandler.callAPI(spaceString).then(res => {
           console.log(res);
         });
