@@ -1,27 +1,12 @@
 <template>
   <div id="app">
-    <canvas-clicker :width="canvasWidth" :height="canvasHeight" :image="canvasImage"></canvas-clicker>
-    <upload-image></upload-image>
+    <div id="nav">
+      <router-link to="/upload">Upload File</router-link> |
+      <router-link to="/spaces">Define Spaces</router-link>
+    </div>
+    <router-view />
   </div>
 </template>
-
-<script>
-import CanvasClicker from './components/CanvasClicker.vue'
-import UploadImage from './components/UploadImage'
-
-export default {
-  name: 'App',
-  components: {
-    CanvasClicker,
-    UploadImage
-  },
-  data: () => ({
-    canvasWidth: 1200,
-    canvasHeight: 600,
-    canvasImage: 'fp.png'
-  })
-}
-</script>
 
 <style>
 #app {
@@ -30,6 +15,18 @@ export default {
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
-  margin-top: 60px;
+}
+
+#nav {
+  padding: 30px;
+}
+
+#nav a {
+  font-weight: bold;
+  color: #2c3e50;
+}
+
+#nav a.router-link-exact-active {
+  color: #42b983;
 }
 </style>

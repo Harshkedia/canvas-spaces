@@ -8,10 +8,17 @@ export function getMakeActivityString(name, start, duration) {
   return `mutation{makeActivity(name:"${name}", start:${start}, duration:${duration}){id}}`;
 }
 
-export function getMakeSpaceString(name, project, daylight, nature, sound, like, points) {
+export function getMakeSpaceString(
+  name,
+  project,
+  daylight,
+  nature,
+  sound,
+  like,
+  points
+) {
   return `mutation{makeSpace(name:"${name}", project:"${project}", daylight:${daylight}, nature:${nature}, sound:${sound}, like:${like}, points:[${points}]){id}}`;
 }
-
 
 export function callAPI(queryString) {
   return new Promise((resolve, reject) => {
