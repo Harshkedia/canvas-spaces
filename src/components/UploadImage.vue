@@ -37,6 +37,7 @@ export default {
           }
         )
         .then(res => {
+          window.alert("Upload Successful!");
           console.log(res);
         });
     }
