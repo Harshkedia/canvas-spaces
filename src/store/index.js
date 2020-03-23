@@ -5,15 +5,11 @@ Vue.use(Vuex);
 
 export default new Vuex.Store({
   state: {
-    project: "",
-    image: ""
+    project: ""
   },
   mutations: {
     setProject(state, payload) {
       state.project = payload;
-    },
-    setImage(state, payload) {
-      state.image = payload;
     }
   },
   actions: {},
@@ -21,9 +17,6 @@ export default new Vuex.Store({
   getters: {
     project(state) {
       return state.project;
-    },
-    image(state) {
-      return state.image;
     }
   }
 });

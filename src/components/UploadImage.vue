@@ -6,40 +6,40 @@
 </template>
 
 <script>
-import axios from "axios";
 import store from "@/store/index.js";
+import db from "@/lib/Firebase";
 
 export default {
   name: "UploadImage",
   data() {
     return {
-      selectedFile: null,
+      file: null,
       project: ""
     };
   },
   methods: {
     onFileSelected(event) {
-      this.selectedFile = event.target.files[0];
+      this.file = event.target.files[0];
       this.project = window.prompt("Project Name");
+      store.commit("setProject", this.project);
     },
     onUpload() {
-      const fd = new FormData();
-      fd.append("image", this.selectedFile, this.selectedFile.name);
-      store.commit("setImage", this.selectedFile.name);
-      store.commit("setProject", this.project);
-      console.log(store.getters.image);
-      axios
-        .post(
-          "https://us-central1-rhythm-day.cloudfunctions.net/uploadFile",
-          fd,
-          {
-            headers: { project: this.project }
-          }
-        )
-        .then(res => {
-          window.alert("Upload Successful!");
-          console.log(res);
-        });
+      const storageRef = db.ref();
+      const metadata = {
+        name: this.project
+      };
+      const upload = storageRef.child(this.project).put(this.file, metadata);
+      upload.on(
+        "state_changed",
+        function(snapshot) {
+          var progress =
+            (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+          console.log("Upload is " + progress + "% done");
+        },
+        function(error) {
+          console.log(error);
+        }
+      );
     }
   }
 };
