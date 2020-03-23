@@ -79,7 +79,7 @@ export default {
         });
         const spaceString = apiHandler.getMakeSpaceString(
           space.name,
-          "Amazon",
+          store.getters.project,
           1,
           1,
           1,
