@@ -25,10 +25,7 @@ export default {
     },
     onUpload() {
       const storageRef = db.ref();
-      const metadata = {
-        name: this.project
-      };
-      const upload = storageRef.child(this.project).put(this.file, metadata);
+      const upload = storageRef.child(this.project).put(this.file);
       upload.on(
         "state_changed",
         function(snapshot) {
